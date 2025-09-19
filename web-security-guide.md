@@ -1,4 +1,4 @@
-# web-security-guide
+# Web Security Guide
 
 ## リダイレクトに関する脆弱性
 
