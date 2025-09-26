@@ -237,7 +237,7 @@ example@gmail.com; rm -rf /
 
 ## ファイルダウンロード時のクロスサイト・スクリプティング脆弱性
 ### 概要
-ファイルダウンロード時に間違った`Content-Type`が指定されると、XSSになる場合がある。例えば、以下のPDFファイルをレスポンスとして返却する際に、`Content-Type: text/html` や、間違った`Content-Type`が設定されていると、ブラウザがレスポンスを HTMLとして解釈し、`<script>` が実行されてしまう可能性がある。
+ファイルダウンロード時に間違った`Content-Type`が指定されると、XSSになる場合がある。例えば、以下のPDFファイルをレスポンスとして返却する際に、`Content-Type: text/html` や、間違った`Content-Type`が指定されていると、ブラウザがレスポンスを HTMLとして解釈し、`<script>` が実行されてしまう可能性がある。
 
 ```
 <script>
@@ -257,11 +257,26 @@ example@gmail.com; rm -rf /
     → `Content-Type`のみから`Content-Type`を解釈するようになる
 - レスポンスヘッダに`Content-Disposition: attachment`を追加（必要に応じて）
     
-    → ダウンロードしたファイルをアプリケーションで開くのではなく、ローカルに保存する場合、レスポンスヘッダに以下を指定する。
+    → ダウンロードしたファイルをアプリケーションで開くのではなく、ローカルに保存するために、レスポンスヘッダに以下を指定する。
 ```
 Content-Type: application/octet-stream（必要に応じて）
 Content-Disposition: attachment; filename="defaultfilename.pdf"
 ```
+
+## PDFのコンテンツハイジャック
+### 概要
+Adobeのエコシステムは、PDFファイルに埋め込むことができるFormCalcというスクリプト言語を提供している。Adobe Acrobat Readerプラグインを備えたブラウザで、FormCalcが埋め込まれたPDFを開くと、埋め込まれたスクリプトが実行される。
+そのURL関数を悪用することで、指定されたURLに不正なリクエストを送信し、Webサイトの正規ユーザーを装って秘密情報を取得する攻撃手法が存在する。
+
+### 原因
+- Adobe Acrobat Readerの仕様
+
+### 対策
+- PDFファイルをブラウザで開かず、ダウンロードする
+- 罠サイトに設置された`<object>`や`<embed>`要素経由でPDFファイルを開けないように、PDFファイルダウンロード時にPOSTリクエストのみを許可する
+
+
+
 
 
 
