@@ -19,6 +19,7 @@ Web Security に関する知見をまとめていきます。
     -   [DoS攻撃](#dos攻撃)
     -   [アップロードファイルがサーバー上で実行される脆弱性](#アップロードファイルがサーバー上で実行される脆弱性) 
     -   [ファイルダウンロード時のクロスサイト・スクリプティング脆弱性](#ファイルダウンロード時のクロスサイトスクリプティング脆弱性) 
+    - [PDFのコンテンツハイジャック](#pdfのコンテンツハイジャック) 
 
 # Cookie
 
@@ -257,7 +258,7 @@ example@gmail.com; rm -rf /
     → `Content-Type`のみから`Content-Type`を解釈するようになる
 - レスポンスヘッダに`Content-Disposition: attachment`を追加（必要に応じて）
     
-    → ダウンロードしたファイルをアプリケーションで開くのではなく、ローカルに保存するために、レスポンスヘッダに以下を指定する。
+    → 以下を指定することで、ダウンロードしたファイルをアプリケーションで開くのではなく、ローカルに保存させる。
 ```
 Content-Type: application/octet-stream（必要に応じて）
 Content-Disposition: attachment; filename="defaultfilename.pdf"
@@ -272,8 +273,15 @@ Adobeのエコシステムは、PDFファイルに埋め込むことができる
 - Adobe Acrobat Readerの仕様
 
 ### 対策
-- PDFファイルをブラウザで開かず、ダウンロードする
+PDFファイルのアップロード機能が必要かどうか検討する。必要な場合は以下の対策を行う。
+
+- PDFファイルをブラウザで開かず、ダウンロードする。ダウンロードを強制するために、以下のレスポンスヘッダを出力。
 - 罠サイトに設置された`<object>`や`<embed>`要素経由でPDFファイルを開けないように、PDFファイルダウンロード時にPOSTリクエストのみを許可する
+
+```
+Content-Type: application/octet-stream（必要に応じて）
+Content-Disposition: attachment; filename="defaultfilename.pdf"
+```
 
 
 
