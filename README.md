@@ -3,7 +3,7 @@
 
 日々、コンテンツの追加・更新を行なっています。現在のコンテンツは[目次](#目次)を参照してください。
 
-内容に誤りや誤解を招く表現などありましたら、Discussion経由でご指摘いただけますと幸いです。修正させていただきます。簡単な質問や緩いコミュニケーションも常にWelcomeなので、Discussionでコメントください！！
+内容に誤りや誤解を招く表現などありましたら、[Discussion](https://github.com/zakzackr/web-security-guide/discussions)経由でご指摘いただけますと幸いです。修正させていただきます。簡単な質問や緩いコミュニケーションも常にWelcomeなので、[Discussion](https://github.com/zakzackr/web-security-guide/discussions)でコメントください！！
 
 # 目次
 - [Cookie](#cookie)
