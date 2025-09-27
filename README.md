@@ -1,6 +1,9 @@
-# Web Security ガイド
+# 🛡️Webセキュリティガイド
+Webセキュリティのプラクティス集です。日々、コンテンツの追加・更新を行なっています。現在のコンテンツは[目次](#目次)を参照してください。
 
-Web Security に関する知見をまとめていきます。
+内容に誤りや誤解を招く表現などありましたら、Discussion経由でご指摘いただけますと幸いです。修正させていただきます。
+
+簡単な質問や緩いコミュニケーションも常にWelcomeなので、Discussionでコメントください！！
 
 # 目次
 - [Cookie](#cookie)
@@ -336,14 +339,17 @@ http://example.com/page.php?data=system("cat /etc/passwd");
 今回のケースは、`cat /etc/passwd`の実行により、サーバ内の秘密情報が外部に漏洩する例だが、その他にもサイトの改ざんや、不正機能の実行など、[OSコマンド・インジェクション攻撃](#osコマンドインジェクション)と同様の被害が発生する。
 
 ### 原因
-- evalの使用自体が危険
+- eval関数の使用自体が危険
 
-    → [MDN Web Docs](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/eval)でも`eval()`を使わないように言及されている
-- evalに与えるパラメータのチェックをしていない
+    → [MDN Web Docs](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/eval) や [PHPドキュメント](https://www.php.net/manual/ja/function.eval.php)でも`eval()`を使用しないように言及されている
+- eval関数に与えるパラメータのチェックをしていない
 
 ### 対策
-- evalを使用しない
+- eval相当の関数・機能を使用しない
 - eval関数の引数に外部からのパラメータを渡さない。渡す場合は、外部からのパラメータを英数字のみに制限する
+
+## 安全ではないデシリアライゼーション
+### 概要
 
 
 
