@@ -369,11 +369,34 @@ http://example.com/page.php?data=system("cat /etc/passwd");
 [PHPで安全でないデシリアライゼーションを学ぼう](https://zenn.dev/shlia/articles/f80215c6538f2c)
 
 
-<!-- ## XML外部実体参照（XXE）
+## XML外部実体参照（XXE）
 ### 概要
+XMLには、外部実体参照機能という外部ファイルを参照する機能が存在し、それを悪用する攻撃をXML外部実体参照攻撃（XXE）と呼ぶ。XXEにより、情報漏洩や他システムへの踏み台攻撃が発生する。
+　　
 
+具体的には、利用者がフォーム入力やファイルアップロード機能を通してXML形式のデータをサーバ側に送信できる場合を考える。
+以下のXML形式のデータがサーバに送信され、サーバ側でXMLをHTMLに変換し、Webページとして表示する実装が存在する場合、Webサーバ内の非公開ファイル`/etc/passwd`が外部に漏洩する可能性がある。
+
+```xml
+<!DOCTYPE foo [
+  <!ENTITY email SYSTEM "/etc/passwd">
+]>
+<user>
+  <email>&email;</email>
+</user>
+```
+
+先の例では、Webサーバ内部のファイルの漏洩を扱ったが、`SYSTEM "http://attacker.com"` などのURLを指定することで外部リソースを読み込むことも可能である。
 
 ### 原因
+- XMLの持つ機能を悪用した攻撃であり、アプリケーションのバグではない
 
-### 対策 -->
+### 対策
+- XMLではなくJSONを使用する
+- XMLを使用する必要がある場合は、外部実体参照あるいはDTDを禁止する設定を行う
+
+PHPのXMLパース処理で使用されるlibxml2というライブラリは、[安全なWebアプリケーションの作り方](https://www.amazon.co.jp/%E4%BD%93%E7%B3%BB%E7%9A%84%E3%81%AB%E5%AD%A6%E3%81%B6-%E5%AE%89%E5%85%A8%E3%81%AAWeb%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9-%E7%AC%AC2%E7%89%88-%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%8C%E7%94%9F%E3%81%BE%E3%82%8C%E3%82%8B%E5%8E%9F%E7%90%86%E3%81%A8%E5%AF%BE%E7%AD%96%E3%81%AE%E5%AE%9F%E8%B7%B5-%E5%BE%B3%E4%B8%B8/dp/4797393165)では、外部実体参照がデフォルトで無効になっているため、XXE脆弱性は存在しないと記載されている。しかし、[「libxml2」にXXE脆弱性 - 利用アプリに影響](https://www.security-next.com/165738)で、libxml2のXXE脆弱性が言及されているため、アプリケーション側での対策が必要と思われる。　　
+
+Javaの場合、多くのXMLパーサにおいて外部実体参照がデフォルトで有効なため、アプリケーション側でDTDを禁止するなどの対策が必要になる。DTDを無効にする方法については、次を参照：[XML 外部エンティティ インジェクション](https://developer.android.com/privacy-and-security/risks/xml-external-entities-injection?hl=ja)
+
 
