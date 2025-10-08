@@ -32,6 +32,8 @@
 -   [共有資源やキャッシュに関する脆弱性](#共有資源やキャッシュに関する脆弱性)
     - [競合状態の脆弱性](#競合状態の脆弱性)
     - [キャッシュからの情報漏洩](#キャッシュからの情報漏洩)
+- [Web API実装に関する脆弱性](#web-api実装に関する脆弱性)
+    - [JSONエスケープの不備](#jsonエスケープの不備)
 
 # Cookie
 
@@ -434,7 +436,7 @@ Webアプリケーションの多くは、レスポンスの高速化や負荷�
 # Web API実装に関する脆弱性
 ## JSONエスケープの不備
 ### 概要
-JSONやクロスオリジンリクエストで使用されるJSONPを使用する際に、[`eval`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/eval)関数を使用したJSONのデコードやJSONの手動生成などにより、エスケープに不備がある場合、不正なJavaScriptが実行される場合がある。
+JSONやクロスオリジンリクエストで使用される[JSONP](https://ja.wikipedia.org/wiki/JSONP)を使用する際に、[`eval`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/eval)関数を使用したJSONのデコードやJSONの手動生成などにより、エスケープに不備がある場合、不正なJavaScriptが実行される場合がある。
 
 ### 原因
 - JSON生成時に適切なエスケープ処理がされていない
