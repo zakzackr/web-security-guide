@@ -436,7 +436,7 @@ Webアプリケーションの多くは、レスポンスの高速化や負荷�
 # Web API実装に関する脆弱性
 ## JSONエスケープの不備
 ### 概要
-JSONやクロスオリジンリクエストで使用される[JSONP](https://ja.wikipedia.org/wiki/JSONP)を使用する際に、[`eval`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/eval)関数を使用したJSONのデコードやJSONの手動生成などにより、エスケープに不備がある場合、不正なJavaScriptが実行される場合がある。
+JSONやクロスオリジンリクエストで使用される[JSONP](https://ja.wikipedia.org/wiki/JSONP)を使用する際に、[`eval`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/eval)関数を使用したJSONのデコードや、JSON生成時のエスケープ処理に不備が存在する場合、不正なJavaScriptが実行される可能性がある。
 
 ### 原因
 - JSON生成時に適切なエスケープ処理がされていない
@@ -444,7 +444,7 @@ JSONやクロスオリジンリクエストで使用される[JSONP](https://ja.
 - JSONPを使用している
 
 ### 対策
-- JSONのエンコード・デコードに脆弱性のないライブラリを使用する
+- JSONのエンコード・デコード時に脆弱性のないライブラリを使用する
 - JSONPを使用しない。クロスオリジンリクエストの場合は、**CORS**を使用する
 
 
