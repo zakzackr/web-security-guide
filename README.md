@@ -5,6 +5,12 @@
 
 内容に誤りや誤解を招く表現などありましたら、[Discussion](https://github.com/zakzackr/web-security-guide/discussions)経由でご指摘いただけますと幸いです。修正させていただきます。簡単な質問や緩いコミュニケーションも常にWelcomeなので、[Discussion](https://github.com/zakzackr/web-security-guide/discussions)でコメントください！！
 
+# 本レポジトリの使い方
+以下のような活用方法を想定しています。
+ 
+- [安全なWebアプリケーションの作り方](https://www.amazon.co.jp/%E4%BD%93%E7%B3%BB%E7%9A%84%E3%81%AB%E5%AD%A6%E3%81%B6-%E5%AE%89%E5%85%A8%E3%81%AAWeb%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9-%E7%AC%AC2%E7%89%88-%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%8C%E7%94%9F%E3%81%BE%E3%82%8C%E3%82%8B%E5%8E%9F%E7%90%86%E3%81%A8%E5%AF%BE%E7%AD%96%E3%81%AE%E5%AE%9F%E8%B7%B5-%E5%BE%B3%E4%B8%B8/dp/4797393165) や [安全なWebサイトの作り方](https://www.ipa.go.jp/security/vuln/websecurity/index.html)などを読む前に概要を把握する
+- Webセキュリティの要点を手っ取り早く理解する
+
 # 目次
 - [Cookie](#cookie)
     - [Cookieのセキュアな設定方法](#cookie-のセキュアな設定方法)
@@ -34,6 +40,7 @@
     - [キャッシュからの情報漏洩](#キャッシュからの情報漏洩)
 - [Web API実装に関する脆弱性](#web-api実装に関する脆弱性)
     - [JSONエスケープの不備](#jsonエスケープの不備)
+- [参考](#参考)
 
 # Cookie
 
@@ -446,3 +453,7 @@ JSONやクロスオリジンリクエストで使用される[JSONP](https://ja.
 ### 対策
 - JSONのエンコード・デコード時に脆弱性のないライブラリを使用する
 - JSONPを使用しない。クロスオリジンリクエストの場合は、**CORS**を使用する
+
+# 参考
+- [安全なWebアプリケーションの作り方 第2版](https://www.amazon.co.jp/%E4%BD%93%E7%B3%BB%E7%9A%84%E3%81%AB%E5%AD%A6%E3%81%B6-%E5%AE%89%E5%85%A8%E3%81%AAWeb%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9-%E7%AC%AC2%E7%89%88-%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%8C%E7%94%9F%E3%81%BE%E3%82%8C%E3%82%8B%E5%8E%9F%E7%90%86%E3%81%A8%E5%AF%BE%E7%AD%96%E3%81%AE%E5%AE%9F%E8%B7%B5-%E5%BE%B3%E4%B8%B8/dp/4797393165)
+- [安全なWebサイトの作り方](https://www.ipa.go.jp/security/vuln/websecurity/index.html)
