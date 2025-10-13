@@ -276,7 +276,7 @@ example@gmail.com; rm -rf /
 - 正しい`Content-Type`の指定（必須）
 - レスポンスヘッダに`X-Content-Type-Options: nosniff`を追加（必須）
 
-    → `Content-Type`のみから`Content-Type`を解釈するようになる
+    → `Content-Type`のみからコンテンツタイプを解釈するようになる
 - レスポンスヘッダに`Content-Disposition: attachment`を追加（必要に応じて）
     
     → 以下を指定することで、ダウンロードしたファイルをアプリケーションで開くのではなく、ローカルに保存させる。
