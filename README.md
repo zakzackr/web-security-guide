@@ -457,9 +457,9 @@ JSONやクロスオリジンリクエストで使用される[JSONP](https://ja.
 
 ## JSON直接閲覧によるXSS
 ### 概要
-レスポンスボディでJSONを返却する際に、誤って`Content-Type: text/html`を指定すると、ブラウザはレスポンスをHTMLとして解釈する。その結果、ブラウザに直接表示されたJSON内の任意のスクリプトが実行される可能性がある。
+レスポンスボディでJSONを返却する際に、誤って`Content-Type: text/html`を指定すると、ブラウザはレスポンスをHTMLとして解釈する。その結果、ブラウザにJSON文字列が直接表示され、JSON内の任意のスクリプトが実行される可能性がある。
 
-以下のレスポンスボディ（抜粋）はその一例である。JSONがHTMLとして扱われ直接ブラウザに表示された結果、画像読み込みに失敗した際に、onerror属性に設定された`alert(document.cookie)`が実行される。
+以下のレスポンスボディ（抜粋）はその一例である。JSON文字列がHTMLとしてブラウザに表示された結果、画像読み込みの失敗により、onerror属性に設定された`alert(document.cookie)`が実行される。
 
 ```
 Content-Type: text/html; charset=utf-8
