@@ -40,6 +40,7 @@
     - [キャッシュからの情報漏洩](#キャッシュからの情報漏洩)
 - [Web API実装に関する脆弱性](#web-api実装に関する脆弱性)
     - [JSONエスケープの不備](#jsonエスケープの不備)
+    - [JSON直接閲覧によるXSS](#json直接閲覧によるxss)
 - [参考](#参考-2)
 
 # Cookie
@@ -453,6 +454,29 @@ JSONやクロスオリジンリクエストで使用される[JSONP](https://ja.
 ### 対策
 - JSONのエンコード・デコード時に脆弱性のないライブラリを使用する
 - JSONPを使用しない。クロスオリジンリクエストの場合は、**CORS**を使用する
+
+## JSON直接閲覧によるXSS
+### 概要
+レスポンスボディでJSONを返却する際に、誤って`Content-Type: text/html`を指定すると、ブラウザはレスポンスをHTMLとして解釈する。その結果、ブラウザに直接表示されたJSON内の任意のスクリプトが実行される可能性がある。
+
+以下のレスポンスボディ（抜粋）はその一例である。JSONがHTMLとして扱われ直接ブラウザに表示された結果、画像読み込みに失敗した際に、onerror属性に設定された`alert(document.cookie)`が実行される。
+
+```
+Content-Type: text/html; charset=utf-8
+  
+{"data" : "<img src=1 onerror=alert(document.cookie)>"}
+```
+
+### 原因
+- 不適切なMIMEタイプ（`Content-Type`）の使用
+
+### 対策
+- 適切なMIMEタイプを指定する  
+→ `Content-Type: application/json`
+- `X-Content-Type-Options: nosniff`を併用する  
+→ ブラウザが`Content-Type`以外の情報（ファイルの拡張子や中身）からMIMEタイプを推測しないようにする
+- JSONでも`<`や`>`などのHTML特殊文字をエスケープする
+
 
 # 参考
 - [安全なWebアプリケーションの作り方 第2版](https://www.amazon.co.jp/%E4%BD%93%E7%B3%BB%E7%9A%84%E3%81%AB%E5%AD%A6%E3%81%B6-%E5%AE%89%E5%85%A8%E3%81%AAWeb%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%AE%E4%BD%9C%E3%82%8A%E6%96%B9-%E7%AC%AC2%E7%89%88-%E8%84%86%E5%BC%B1%E6%80%A7%E3%81%8C%E7%94%9F%E3%81%BE%E3%82%8C%E3%82%8B%E5%8E%9F%E7%90%86%E3%81%A8%E5%AF%BE%E7%AD%96%E3%81%AE%E5%AE%9F%E8%B7%B5-%E5%BE%B3%E4%B8%B8/dp/4797393165)
